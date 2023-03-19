@@ -1,9 +1,9 @@
 export const lightTheme = {
-	backgroundColor: 'bisque',
-	color: 'black',
-}
+    backgroundColor: "bisque",
+    color: "black",
+};
 
 export const darkTheme = {
-	backgroundColor: 'black',
-	color: 'bisque',
-}
+    backgroundColor: "black",
+    color: "bisque",
+};

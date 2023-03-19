@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./assets/styles/App.css";
 import { lightTheme, darkTheme } from "./assets/styles/Themes";
-import ThemeButton from "./components/Buttons/ThemeButton";
-import IntroLabel from "./components/Labels/IntroLabel";
+import { Homepage } from "./components/Pages/Home";
 
 const App = () => {
+    // setup theme toggler
     const [theme, setTheme] = useState(lightTheme);
     const themeToggler = () => {
         theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
     };
-
-    return (
-        <div className="App" id="App">
-            <header className="App-header" style={theme}>
-                <IntroLabel></IntroLabel>
-                <ThemeButton onClick={themeToggler}></ThemeButton>
-            </header>
-        </div>
-    );
+    // setup page toggler
+    const [page, setPage] = useState();
+    const pageToggler = (page) => {
+        setPage(page);
+    };
+    // set homescreen as page
+    if (page === undefined)
+        pageToggler(Homepage(theme, themeToggler, pageToggler));
+    // return page
+    return page;
 };
 
 export default App;
