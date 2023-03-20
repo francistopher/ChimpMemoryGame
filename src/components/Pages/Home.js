@@ -1,13 +1,12 @@
 import React from "react";
-import ThemeButton from "../../components/Buttons/ThemeButton";
-import IntroLabel from "../Labels/IntroLabel";
+
+import IntroButton from "../Labels/IntroLabel";
 
 // returns the homepage
-export const Homepage = (theme, themeToggler, pageToggler) => (
+export const Homepage = ({ theme, pageToggler }) => (
     <div className="App" id="App">
         <header className="App-header" style={theme}>
-            <IntroLabel></IntroLabel>
-            <ThemeButton onClick={themeToggler}></ThemeButton>
+            <IntroButton pageToggler={pageToggler}></IntroButton>
         </header>
     </div>
 );
