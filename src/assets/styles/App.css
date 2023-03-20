@@ -3,6 +3,22 @@
   cursor:pointer;
 }
 
+.Card-Button {
+  all: unset;
+  position: absolute;
+  height: 8vh;
+  width: 6vh;
+  border-width: 0.5vh;
+  border-style: solid;
+  background-color: transparent;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1vh;
+}
+
 .App {
   text-align: center;
 }

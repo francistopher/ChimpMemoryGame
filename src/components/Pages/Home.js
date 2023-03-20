@@ -1,6 +1,6 @@
 import React from "react";
 
-import IntroButton from "../Labels/IntroLabel";
+import IntroButton from "../Buttons/IntroButton";
 
 // returns the homepage
 export const Homepage = ({ theme, pageToggler }) => (
