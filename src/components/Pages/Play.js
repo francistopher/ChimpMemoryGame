@@ -3,30 +3,70 @@ import React, { useState } from "react";
 import { Card } from "../Buttons/Card";
 import "../../assets/styles/App.css";
 
-// returns the play page
-export const Playpage = ({ theme }) => {
-    // build the buttons
-    const buttons = [];
-    for (var i = 0; i < 5; i++) {
-        // generate random positions
+// build the positions before the play page is rendered
+var positions = [];
+
+// update the positions
+const setPositions = () => {
+    positions = [];
+    for (var count = 0; count < 5; count++) {
         const pos = {
             position: "absolute",
             left: Math.floor(Math.random() * 96) + "vw",
             top: Math.floor(Math.random() * 92) + "vh",
         };
-        buttons.push(<Card key={i + 1} val={i + 1} pos={pos}></Card>);
+        positions.push(pos);
     }
+};
+setPositions();
+// start tracker before play page is rendered
+var tracker = 0;
+// returns the play page
+export const Playpage = ({ theme, homeToggler }) => {
+    // keeps track of selected buttons
+    const [selectedCards, setSelectedCards] = useState([]);
 
-    // buttons -> cards
-    const [cards] = useState(buttons);
+    const handleCardClick = (cardIndex) => {
+        setSelectedCards((prevSelectedCards) =>
+            // is button index already within previously selected buttons?
+            prevSelectedCards.includes(cardIndex)
+                ? // if it is, remove it
+                  prevSelectedCards.filter((index) => index !== cardIndex)
+                : // if not, add it
+                  [...prevSelectedCards, cardIndex]
+        );
+        // tracks the order of the buttons selected
+        if (cardIndex === tracker) {
+            // allow the user to continue
+            tracker += 1;
+        } else {
+            // user went out of order/restart
+            tracker = 0;
+            setPositions();
+            homeToggler();
+        }
+    };
 
     return (
-        <>
-            <div className="App" id="App">
-                <header className="App-header" style={theme}>
-                    {cards}
-                </header>
-            </div>
-        </>
+        <div className="App" id="App">
+            <header className="App-header" style={theme}>
+                {positions.map((position, index) => {
+                    // if card withindex/position is selected
+                    if (selectedCards.includes(index)) {
+                        // don't display
+                        return null;
+                    }
+                    // otherwise display card
+                    return (
+                        <Card
+                            key={index}
+                            val={index}
+                            pos={position}
+                            onClick={() => handleCardClick(index)}
+                        ></Card>
+                    );
+                })}
+            </header>
+        </div>
     );
 };

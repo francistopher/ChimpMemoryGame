@@ -8,20 +8,24 @@ import ThemeButton from "./components/Buttons/ThemeButton";
 const App = () => {
     // set the theme
     const [theme, setTheme] = useState(lightTheme);
+
     const themeToggler = () => {
         theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
     };
     // set the page
     const [page, setPage] = useState("home");
-    const play = (page) => {
+    const play = () => {
         setPage("play");
+    };
+    const home = () => {
+        setPage("home");
     };
 
     switch (page) {
         case "play":
             return (
                 <>
-                    <Playpage theme={theme}></Playpage>
+                    <Playpage theme={theme} homeToggler={home}></Playpage>
                     <ThemeButton onClick={themeToggler}></ThemeButton>
                 </>
             );
