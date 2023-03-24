@@ -1,5 +1,5 @@
 // returns the play page
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "../Buttons/Card";
 import "../../assets/styles/App.css";
 
@@ -25,6 +25,7 @@ var tracker = 0;
 export const Playpage = ({ theme, homeToggler }) => {
     // keeps track of selected buttons
     const [selectedCards, setSelectedCards] = useState([]);
+    const [showText, setShowText] = useState(true);
 
     const handleCardClick = (cardIndex) => {
         setSelectedCards((prevSelectedCards) =>
@@ -47,6 +48,16 @@ export const Playpage = ({ theme, homeToggler }) => {
         }
     };
 
+    // hide card numbers after one second
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setShowText(false);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, []);
+
+    // render cards
     return (
         <div className="App" id="App">
             <header className="App-header" style={theme}>
@@ -60,7 +71,7 @@ export const Playpage = ({ theme, homeToggler }) => {
                     return (
                         <Card
                             key={index}
-                            val={index}
+                            val={showText ? index + 1 : ""}
                             pos={position}
                             onClick={() => handleCardClick(index)}
                         ></Card>
