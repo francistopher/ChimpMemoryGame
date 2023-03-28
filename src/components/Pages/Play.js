@@ -27,9 +27,10 @@ var tracker = 0;
 // returns the play page
 export const Playpage = ({
     theme,
-    homeToggler,
     gameOverToggler,
+    proceedToggler,
     cardsCount,
+    nextLevel,
 }) => {
     setPositions(cardsCount);
     // keeps track of selected buttons
@@ -49,12 +50,17 @@ export const Playpage = ({
             // allow the user to continue
             tracker += 1;
             if (cardIndex + 1 === cardsCount) {
-                console.log("YOU WON!");
+                //console.log("YOU WON!");
+                tracker = 0;
+                nextLevel();
+                positionsSet = false;
+                setPositions(cardsCount + 1);
+                proceedToggler();
             }
         } else {
             // user went out of order/restart
             tracker = 0;
-            setPositions();
+            setPositions(cardsCount);
             gameOverToggler();
         }
     };
@@ -63,7 +69,7 @@ export const Playpage = ({
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setShowText(false);
-        }, 1000);
+        }, (cardsCount * 1000) / Math.log2(cardsCount + 1));
 
         return () => clearTimeout(timeoutId);
     }, []);
