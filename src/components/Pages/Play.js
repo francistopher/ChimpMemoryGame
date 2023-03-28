@@ -5,11 +5,14 @@ import "../../assets/styles/App.css";
 
 // build the positions before the play page is rendered
 var positions = [];
-
+var positionsSet = false;
 // update the positions
-const setPositions = () => {
+const setPositions = (cardsCount) => {
+    if (positionsSet) {
+        return;
+    }
     positions = [];
-    for (var count = 0; count < 5; count++) {
+    for (var count = 0; count < cardsCount; count++) {
         const pos = {
             position: "absolute",
             left: Math.floor(Math.random() * 96) + "vw",
@@ -17,16 +20,21 @@ const setPositions = () => {
         };
         positions.push(pos);
     }
+    positionsSet = true;
 };
-setPositions();
 // start tracker before play page is rendered
 var tracker = 0;
 // returns the play page
-export const Playpage = ({ theme, homeToggler }) => {
+export const Playpage = ({
+    theme,
+    homeToggler,
+    gameOverToggler,
+    cardsCount,
+}) => {
+    setPositions(cardsCount);
     // keeps track of selected buttons
     const [selectedCards, setSelectedCards] = useState([]);
     const [showText, setShowText] = useState(true);
-
     const handleCardClick = (cardIndex) => {
         setSelectedCards((prevSelectedCards) =>
             // is button index already within previously selected buttons?
@@ -40,11 +48,14 @@ export const Playpage = ({ theme, homeToggler }) => {
         if (cardIndex === tracker) {
             // allow the user to continue
             tracker += 1;
+            if (cardIndex + 1 === cardsCount) {
+                console.log("YOU WON!");
+            }
         } else {
             // user went out of order/restart
             tracker = 0;
             setPositions();
-            homeToggler();
+            gameOverToggler();
         }
     };
 

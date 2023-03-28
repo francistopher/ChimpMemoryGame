@@ -4,6 +4,7 @@ import { lightTheme, darkTheme } from "./assets/styles/Themes";
 import { Homepage } from "./components/Pages/Home";
 import { Playpage } from "./components/Pages/Play";
 import ThemeButton from "./components/Buttons/ThemeButton";
+import { GameOver } from "./components/Pages/GameOver";
 
 const App = () => {
     // set the theme
@@ -14,6 +15,7 @@ const App = () => {
     };
     // set the page
     const [page, setPage] = useState("home");
+
     const play = () => {
         setPage("play");
     };
@@ -21,11 +23,29 @@ const App = () => {
         setPage("home");
     };
 
+    const gameOver = () => {
+        setPage("over");
+    };
+
+    const [cardsCount, setCardsCount] = useState(5);
+
     switch (page) {
         case "play":
             return (
                 <>
-                    <Playpage theme={theme} homeToggler={home}></Playpage>
+                    <Playpage
+                        theme={theme}
+                        homeToggler={home}
+                        gameOverToggler={gameOver}
+                        cardsCount={cardsCount}
+                    ></Playpage>
+                    <ThemeButton onClick={themeToggler}></ThemeButton>
+                </>
+            );
+        case "over":
+            return (
+                <>
+                    <GameOver theme={theme}></GameOver>;
                     <ThemeButton onClick={themeToggler}></ThemeButton>
                 </>
             );
